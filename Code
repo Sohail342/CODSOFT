@@ -1,0 +1,83 @@
+from tkinter import *
+from tkinter import ttk
+
+# Create root window
+root = Tk()
+root.title("To-Do list by Sohail Ahmad")
+
+# Frame (Width x Height)
+root.geometry('350x200')
+
+# Adding a label to the root window
+lbl = Label(root, text="To-Do List")
+lbl.grid(row=0, column=0, columnspan=2)
+
+# Adding Entry Field
+txt = Entry(root, width=40)
+txt.grid(row=1, column=0)
+
+# Initialize an empty list to store tasks
+task_list = []
+
+# Function to update the combobox values
+def update_combobox():
+    task_combobox['values'] = task_list
+
+# Get value from the text field and update the task list
+def clicked_save():
+    value = txt.get()
+    if value:
+        task_list.append(value)
+        txt.delete(0, 'end')  # Clear the text field
+        update_combobox()  # Update the combobox values
+
+# Button widget  (Save button)
+btn_save = Button(root, text="Save", fg="blue", command=clicked_save)
+btn_save.grid(row=1, column=1)
+
+# Dropdown (Combobox) widget
+task_combobox = ttk.Combobox(root, values=task_list)
+task_combobox.grid(row=2, column=0, columnspan=2)
+
+# Function to update the selected task
+def clicked_update():
+    selected_task = task_combobox.get()
+    new_value = txt.get()
+    
+    if selected_task and new_value:
+        index = task_list.index(selected_task)
+        task_list[index] = new_value
+        update_combobox()  # Update the combobox values
+        txt.delete(0, 'end')  # Clear the text field
+        task_combobox.set("")  # Avoid Selected txt
+
+# Function to delete the tasks or clear the list
+def clicked_delete():
+    global task_list
+    task_list = []    # Empty the list
+    task_combobox.set("")  # Avoid Selected txt
+    update_combobox()
+
+# Function to clear only one task
+def clicked_clear():   
+    selected_task = task_combobox.get()
+    if selected_task:
+        task_list.remove(selected_task)
+        task_combobox.set("")  # Avoid Selected txt
+        update_combobox()
+
+
+# Button widget (Update button)
+btn_update = Button(root, text="Update", fg="blue", command=clicked_update)
+btn_update.grid(row=3, column=1, columnspan=2)
+
+# Button widget (delete button)
+btn_delete = Button(root, text="Delete All", fg="red", command=clicked_delete)
+btn_delete.grid(row=4, column=1, columnspan=2)
+
+# Button widget (clear button)
+btn_clear = Button(root, text="Clear", fg="red", command=clicked_clear)
+btn_clear.grid(row=3, column=0, columnspan=2)
+
+
+root.mainloop()  # Execute Tkinter
