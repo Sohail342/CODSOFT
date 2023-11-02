@@ -1,0 +1,31 @@
+import random
+import string
+
+# Function to generate a random password
+def generate_password(length):
+    # Define the characters to choose from
+    characters = string.ascii_letters + string.digits + string.punctuation
+
+    # Ensure at least one of each character type
+    password = [random.choice(string.ascii_lowercase),
+                random.choice(string.ascii_uppercase),
+                random.choice(string.digits),
+                random.choice(string.punctuation)]
+
+    # Generate the remaining characters
+    password.extend(random.choice(characters) for _ in range(length - 4))
+
+    # Shuffle the characters to make the password random
+    random.shuffle(password)
+
+    # Convert the list of characters to a string
+    return ''.join(password)
+
+# Input from the user
+length = int(input("Enter the desired password length: "))
+
+# Generate the password
+password = generate_password(length)
+
+# Display the generated password
+print("Generated Password: ", password)
