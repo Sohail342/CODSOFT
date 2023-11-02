@@ -1,0 +1,66 @@
+import random
+
+# Define quiz questions within the script
+quiz_questions = [
+    {
+        "question": "What is the capital of France?",
+        "choices": ["A) Berlin", "B) London", "C) Paris", "D) Madrid"],
+        "answer": "C"
+    },
+    {
+        "question": "Which planet is known as the Red Planet?",
+        "choices": ["A) Venus", "B) Mars", "C) Jupiter", "D) Saturn"],
+        "answer": "B"
+    },
+    {
+        "question": "What is the largest mammal in the world?",
+        "choices": ["A) Elephant", "B) Blue Whale", "C) Giraffe", "D) Lion"],
+        "answer": "B"
+    },
+    # Add more questions here
+]
+
+# Function to present a question and get the user's answer
+def ask_question(question_dict):
+    print(question_dict["question"])
+    for choice in question_dict["choices"]:
+        print(choice)
+
+    user_answer = input("Enter the letter of your answer (e.g., A, B, C, D): ").upper()
+    return user_answer
+
+# Function to play the quiz game
+def play_quiz(questions):
+    score = 0
+
+    for question in questions:
+        user_answer = ask_question(question)
+
+        if user_answer == question["answer"]:
+            print("Correct!\n")
+            score += 1
+        else:
+            print(f"Incorrect. The correct answer is {question['answer']}\n")
+
+    return score
+
+# Function to display the final score and message
+def display_results(score, total_questions):
+    print(f"Your score: {score}/{total_questions}")
+    percentage = (score / total_questions) * 100
+
+    if percentage >= 70:
+        print("Congratulations! You did well.")
+    else:
+        print("You can do better. Keep practicing!")
+
+# Main game loop
+while True:
+    random.shuffle(quiz_questions)  # Shuffle the questions for variety
+    total_questions = len(quiz_questions)
+    user_score = play_quiz(quiz_questions)
+    display_results(user_score, total_questions)
+
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    if play_again != "yes":
+        break
